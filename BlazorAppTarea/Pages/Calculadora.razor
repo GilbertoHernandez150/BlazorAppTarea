@@ -1,0 +1,35 @@
+﻿@page "/calculadora"
+
+<PageTitle>Aprende Mas</PageTitle>
+
+<h1>Calculadora</h1>
+
+<div>
+    <label for="num1">Número 1:</label>
+    <input type="number" @bind="num1" />
+</div>
+<div>
+    <label for="num2">Número 2:</label>
+    <input type="number" @bind="num2" />
+</div>
+
+<div>
+    <button @onclick="Sumar">Suma</button>
+    <button @onclick="Restar">Resta</button>
+    <button @onclick="Multiplicar">Multiplicación</button>
+    <button @onclick="Dividir">División</button>
+</div>
+
+<h2>Resultado: @resultado</h2>
+
+@code {
+    private double num1;
+    private double num2;
+    private double resultado;
+
+    private void Sumar() => resultado = num1 + num2;
+    private void Restar() => resultado = num1 - num2;
+    private void Multiplicar() => resultado = num1 * num2;
+    private void Dividir() => resultado = num1 / num2;
+}
+

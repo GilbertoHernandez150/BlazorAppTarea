@@ -1,0 +1,56 @@
+﻿@page "/aprende-mas"
+
+<PageTitle>Aprende Mas</PageTitle>
+
+<h1>Aprende Más sobre Blazor</h1>
+
+<div class="row">
+    @foreach (var video in videos)
+    {
+        var videoId = GetVideoId(video.Url);
+        <!-- Extraemos el ID del video -->
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <img class="card-img-top" src="https://img.youtube.com/vi/@videoId/hqdefault.jpg" alt="Card image cap" />
+                <div class="card-body">
+                    <h5 class="card-title">Video</h5>
+                    <p class="card-text">@video.Titulo</p>
+                    <a href="@video.Url" class="btn btn-primary" target="_blank">Ver video</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    class Video
+    {
+        public string Titulo { get; set; }
+        public string Url { get; set; }
+    }
+
+    List<Video> videos = new List<Video>
+    {
+        new Video {Titulo="El video Blazor en 10 minutos muestra cómo usar Blazor para crear aplicaciones web de una sola página con HTML y C#, sin JavaScript.Lo que me gustó fue cómo el video demuestra de manera clara y concisa lo fácil que es desarrollar aplicaciones interactivas con Blazor, unificando tecnologías de front-end y back-end.", Url="https://youtu.be/VDkiB5F7FH0"},
+        new Video {Titulo="El video Introducción a Blazor explica cómo Blazor permite crear aplicaciones web en C# y compara Blazor Server con Blazor WebAssembly.Lo que me gustó fue la claridad con la que se explican las diferencias entre ambos modos de Blazor y cómo se demuestra su flexibilidad para crear aplicaciones web eficientes.", Url="https://www.youtube.com/watch?v=hwzzpOq0MIg"},
+        new Video {Titulo="El video Introducción a Blazor Hybrid explica cómo crear apps multiplataforma con Blazor y .NET MAUI, reutilizando código y gestionando interacciones nativas.Lo que me gustó fue cómo Blazor Hybrid aprovecha la flexibilidad de Blazor para crear aplicaciones en múltiples plataformas, lo que resulta en un enfoque muy eficiente para el desarrollo de software.", Url="https://youtu.be/Qx5pOLs_VE8"},
+        new Video {Titulo="El video Novedades de Blazor en .NET 8 presenta Static Server-Side Rendering (SSR) para mejorar el rendimiento, además de streaming SSR, Enhance navigation y Blazor con SignalR.Me gustó cómo se destacan las mejoras en rendimiento y carga de páginas, haciendo Blazor más eficiente.", Url="https://youtu.be/EBvDPGYe8rY"},
+        new Video {Titulo="El video sobre Blazor en .NET 8 cubre la combinación de Blazor Server y WebAssembly, renderizado estático, stream rendering, Quick grid y la retrocompatibilidad de .NET 8.Me gustó la claridad y los ejemplos que hacen más accesibles las novedades de Blazor", Url="https://youtu.be/hAFFyEUpQnA"}
+    };
+
+    string GetVideoId(string videoUrl)
+    {
+        // Extraer el ID del video a partir de la URL de YouTube
+        var uri = new Uri(videoUrl);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        string videoId = query["v"]; // Para URLs como "https://www.youtube.com/watch?v=ID"
+
+        if (string.IsNullOrEmpty(videoId)) // Para URLs cortas como "https://youtu.be/ID"
+        {
+            videoId = uri.Segments.Last();
+        }
+
+        return videoId;
+    }
+}
+
